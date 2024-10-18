@@ -40,8 +40,17 @@ export default class CompareHands {
   }
 
   static isFourOfAKind(hand) { // TODO!
+    this.sortByRank(hand);
+    let ranks = this.numbOfOcurrences(hand);
+    let values = Object.values(ranks);
+
+    if (values.includes(4) && values.indexOf(4) === values.lastIndexOf(4)) {
+      return this.rankToPoint(Object.keys(ranks)[values.indexOf(4)])
+    }
     return 0;
+
   }
+  
 
   static isFullHouse(hand) { // TODO!
     return 0;
@@ -84,8 +93,17 @@ export default class CompareHands {
     return this.rankToPoint(ranks[4]);
   }
 
-  static isThreeOfAKind(hand) { // TODO!
+  static isThreeOfAKind(hand) { 
+    //Sorterart korten på hand
+    this.sortByRank(hand);
+    let ranks = this.numbOfOcurrences(hand);
+    let values = Object.values(ranks);
+
+    if (values.includes(3) && values.indexOf(3) === values.lastIndexOf(3)) {
+      return this.rankToPoint(Object.keys(ranks)[values.indexOf(3)])
+    }
     return 0;
+
   }
 
   static isTwoPair(hand) { // TODO!
@@ -101,6 +119,15 @@ export default class CompareHands {
   }
 
   // helper functions below:
+
+  static numbOfOcurrences(hand) {
+    let ranks = {};
+    for (let card of hand.cards) {
+      ranks[card.rank] = ranks[card.rank] || 0;
+      ranks[card.rank]++;
+    }
+    return ranks;
+  }
 
   static rankToPoint(rank) {
     return this.ranks.indexOf(rank) + 2;
