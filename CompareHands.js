@@ -39,7 +39,7 @@ export default class CompareHands {
     return this.isStraight(hand) && this.isFlush(hand);
   }
 
-  static isFourOfAKind(hand) { // TODO!
+  static isFourOfAKind(hand) { 
     this.sortByRank(hand);
     let ranks = this.numbOfOcurrences(hand);
     let values = Object.values(ranks);
@@ -52,7 +52,7 @@ export default class CompareHands {
   }
   
 
-  static isFullHouse(hand) { // TODO!
+  static isFullHouse(hand) { // TODO! three of a kind and pair
     return 0;
   }
 
@@ -106,7 +106,17 @@ export default class CompareHands {
 
   }
 
-  static isTwoPair(hand) { // TODO!
+  static isTwoPair(hand) { 
+    this.sortByRank(hand);
+    let ranks = this.numbOfOcurrences(hand);
+    let values = Object.values(ranks);
+    
+    if (values.includes(2) && values.indexOf(1) && values.lastIndexOf(2) ) {
+      const pairOne = this.rankToPoint(Object.keys(ranks)[values.indexOf(2)])
+      const pairTwo = this.rankToPoint(Object.keys(ranks)[values.lastIndexOf(2)])
+      const kickCard = this.rankToPoint(Object.keys(ranks)[values.indexOf(1)])
+      return pairOne + pairTwo + kickCard
+    }
     return 0;
   }
 
